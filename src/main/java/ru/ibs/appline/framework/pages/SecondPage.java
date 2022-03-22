@@ -3,10 +3,12 @@ package ru.ibs.appline.framework.pages;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
-import ru.ibs.appline.framework.utils.StringUtils;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import ru.ibs.appline.framework.utils.Utils;
 
 import java.util.List;
 
@@ -44,7 +46,13 @@ public class SecondPage extends BasePage {
         for (WebElement element : infoText) {
             String[] text = element.getText().split("\\n");
             if (text[0].contains(key)) {
-                Assertions.assertEquals(value, StringUtils.convertToInteger(text[1]), "Действительное значение " + text[0] + " не совадает с ожидаемым");
+                WebElement element1 = element.findElement(By.xpath(".//span//span"));
+                String strValue = Utils.convertToString(value);
+                try {
+                    wait.until(ExpectedConditions.textToBePresentInElement(element1, strValue));
+                } catch (TimeoutException e) {
+                    Assertions.assertEquals(value, Utils.convertToInteger(element1.getText()), "Действительное значение " + text[0] + " не совадает с ожидаемым");
+                }
                 flagNotFound = false;
                 break;
             }
@@ -52,7 +60,7 @@ public class SecondPage extends BasePage {
         if (flagNotFound) {
             String[] text = info.getText().split("\\n");
             if (text[0].contains(key)) {
-                Assertions.assertEquals(value, StringUtils.convertToInteger(text[1]), "Действительное значение " + text[0] + " не совадает с ожидаемым");
+                Assertions.assertEquals(value, Utils.convertToInteger(text[1]), "Действительное значение " + text[0] + " не совадает с ожидаемым");
                 flagNotFound = false;
             }
         }
@@ -68,15 +76,15 @@ public class SecondPage extends BasePage {
         for (WebElement label : labels) {
             waitUtilElementToBeVisible(labels.get(labels.size() - 1));
             if (label.getText().contains(key)) {
+                WebElement input = label.findElement(By.xpath("./../input"));
+                input.sendKeys(Keys.chord(Keys.CONTROL, "a"), "" + value);
+                flagFound = true;
+                Assertions.assertEquals(Utils.convertToInteger(input.getAttribute("value")), value);
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                WebElement input = label.findElement(By.xpath("./../input"));
-                input.sendKeys(Keys.chord(Keys.CONTROL, "a"), "" + value);
-                flagFound = true;
-                Assertions.assertEquals(StringUtils.convertToInteger(input.getAttribute("value")), value);
                 break;
             }
         }

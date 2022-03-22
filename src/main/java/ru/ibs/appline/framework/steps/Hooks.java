@@ -17,13 +17,12 @@ public class Hooks {
         InitManager.initFramework();
     }
 
-
     @After
-    public void after(Scenario scenario) {
+    public static void After(Scenario scenario) {
         if (scenario.isFailed()) {
             final byte[] screenshot = ((TakesScreenshot) DriverManager.getINSTANCE().getDriver())
                     .getScreenshotAs(OutputType.BYTES);
-            scenario.attach(screenshot, "image/png","Error");
+            scenario.attach(screenshot, "image/png", "Error");
         }
         InitManager.quitFramework();
     }
