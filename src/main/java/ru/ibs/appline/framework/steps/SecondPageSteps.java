@@ -42,10 +42,7 @@ public class SecondPageSteps {
                     pageManager.getSecondPage().fillCheckBox(t.get("Наименование"), false);
                 } else Assertions.fail("Ожидался \"true\" или \"false\", а получен " + t.get("тип"));
             } else Assertions.fail("Ожидался \"тип\" или \"чекбокс\", а получен " + t.get("тип"));
-            System.out.print(t.get("Наименование"));
-            System.out.println(t.get("значение"));
         });
-
     }
 
     @И("^Заполняем поля формы:$")
