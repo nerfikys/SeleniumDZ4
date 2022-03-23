@@ -6,7 +6,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class StartPage extends BasePage {
 
@@ -22,7 +21,7 @@ public class StartPage extends BasePage {
     private List<WebElement> secondMenu;
 
     public void closeCookies() {
-       waitToClickable(cookiesBtnClose).click();
+        waitToClickable(cookiesBtnClose).click();
     }
 
 
@@ -31,29 +30,29 @@ public class StartPage extends BasePage {
     }
 
     public void turnFirstMenu(String nameMenu) {
-        boolean flagFind= false;
+        boolean flagFind = false;
         waitUtilElementToBeVisible(firstMenu.get(firstMenu.size() - 1));
         for (WebElement menu : firstMenu) {
             if (menu.getText().contains(nameMenu)) {
                 waitToClickable(menu).click();
                 secondMenu = menu.findElements(By.xpath(".//a[@class='kitt-top-menu__link kitt-top-menu__link_second']"));
-                flagFind=true;
+                flagFind = true;
                 break;
             }
         }
-        Assertions.assertTrue(flagFind,"Не был найден элемент меню с " + nameMenu);
+        Assertions.assertTrue(flagFind, "Не был найден элемент меню с " + nameMenu);
     }
 
     public void turnSecondMenu(String nameMenu) {
-        boolean flagFind= false;
+        boolean flagFind = false;
         waitUtilElementToBeVisible(secondMenu.get(secondMenu.size() - 1));
         for (WebElement menu : secondMenu) {
             if (menu.getText().contains(nameMenu)) {
                 waitToClickable(menu).click();
-                flagFind=true;
+                flagFind = true;
                 break;
             }
         }
-        Assertions.assertTrue(flagFind,"Не был найден элемент подменю с " + nameMenu);
+        Assertions.assertTrue(flagFind, "Не был найден элемент подменю с " + nameMenu);
     }
 }
