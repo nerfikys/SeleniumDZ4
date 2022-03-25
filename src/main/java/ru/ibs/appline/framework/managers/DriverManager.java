@@ -7,6 +7,11 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeDriverService;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.opera.OperaDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
+
+import java.net.MalformedURLException;
+import java.net.URI;
 
 import static ru.ibs.appline.framework.utils.PropsConst.*;
 
@@ -37,10 +42,35 @@ public class DriverManager {
 
     private void initDriver() {
         switch (props.getProperty(TYPE_BROWSER)) {
-            case "firefox":
-                System.setProperty("webdriver.firefox.bin", props.getProperty(PATH_FIREFOX_BIN));
-                System.setProperty("webdriver.gecko.driver", props.getProperty(PATH_GECKO_DRIVER_WIDOWS));
-                driver = new FirefoxDriver();
+            case "remoteChrome":
+                DesiredCapabilities capabilities = new DesiredCapabilities();
+                capabilities.setBrowserName("chrome");
+                capabilities.setVersion("84.0");
+                capabilities.setCapability("enableVNC", true);
+                capabilities.setCapability("enableVideo", false);
+                try {
+                    driver = new RemoteWebDriver(
+                            URI.create("http://51.250.100.60:4444/wd/hub").toURL(),
+                            capabilities
+                    );
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case "remoteOpera":
+                DesiredCapabilities capabilitiesOpera = new DesiredCapabilities();
+                capabilitiesOpera.setBrowserName("opera");
+                capabilitiesOpera.setVersion("69.0");
+                capabilitiesOpera.setCapability("enableVNC", true);
+                capabilitiesOpera.setCapability("enableVideo", false);
+                try {
+                    driver = new RemoteWebDriver(
+                            URI.create("http://51.250.100.60:4444/wd/hub").toURL(),
+                            capabilitiesOpera
+                    );
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
                 break;
             case "chrome":
                 System.setProperty("webdriver.chrome.driver", props.getProperty(PATH_CHROME_DRIVER_WIDOWS));
