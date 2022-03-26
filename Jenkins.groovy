@@ -3,16 +3,16 @@ pipeline {
         choice choices: ['remoteChrome', 'remoteOpera'], name: 'TYPE_BROWSER'
         string defaultValue: '@Test', name: 'TAG'
     }
-    agent { label 'windows'}
+    agent any
     stages {
         stage('Build') {
             steps {
-                bat "mvn clean compile"
+                sh "mvn clean compile"
             }
         }
         stage('Run Tests') {
             steps {
-                bat "mvn test -Dcucumber.filter.tags=${TAG} -Dtype.browser=${TYPE_BROWSER}"
+                sh "mvn test -Dcucumber.filter.tags=${TAG} -Dtype.browser=${TYPE_BROWSER}"
             }
         }
         stage('Allure Report Generation') {
