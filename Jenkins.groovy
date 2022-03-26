@@ -1,3 +1,4 @@
+def mvn = "/var/lib/jenkins/tools/hudson.tasks.Maven_MavenInstallation/mvn/bin/mvn"
 pipeline {
     parameters {
         choice choices: ['remoteChrome', 'remoteOpera'], name: 'TYPE_BROWSER'
@@ -7,12 +8,12 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh "mvn clean compile"
+                sh "${mvn} clean compile"
             }
         }
         stage('Run Tests') {
             steps {
-                sh "mvn test -Dcucumber.filter.tags=${TAG} -Dtype.browser=${TYPE_BROWSER}"
+                sh "${mvn} test -Dcucumber.filter.tags=${TAG} -Dtype.browser=${TYPE_BROWSER}"
             }
         }
         stage('Allure Report Generation') {
