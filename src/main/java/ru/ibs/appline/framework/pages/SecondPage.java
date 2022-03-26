@@ -101,9 +101,9 @@ public class SecondPage extends BasePage {
             waitUtilElementToBeVisible(labels.get(labels.size() - 1));
             if (label.getText().contains(key)) {
                 WebElement input = label.findElement(By.xpath(".//label"));
-                if (value & !input.getAttribute("class").contains("checked")) {
+                if (value && !input.getAttribute("class").contains("checked")) {
                     waitToClickable(input).click();
-                } else if ((!value) & (input.getAttribute("class").contains("checked"))) {
+                } else if ((!value) && (input.getAttribute("class").contains("checked"))) {
                     waitToClickable(input).click();
                 }
                 flagFound = true;
