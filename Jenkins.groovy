@@ -3,7 +3,7 @@ pipeline {
         choice choices: ['remoteChrome', 'remoteOpera'], name: 'TYPE_BROWSER'
         string defaultValue: '@Test', name: 'TAG'
     }
-    agent any
+    agent { label 'windows'}
     stages {
         stage('Build') {
             steps {
