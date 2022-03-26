@@ -8,7 +8,7 @@ import ru.ibs.appline.framework.managers.PageManager;
 public class StartPageSteps {
 
     private final PageManager pageManager = PageManager.getINSTANCE();
-    private static final Logger logger = LoggerFactory.getLogger(Hooks.class);
+    private static final Logger logger = LoggerFactory.getLogger(StartPageSteps.class);
 
     @И("^Закрываем куки$")
     public void closeCookies() {

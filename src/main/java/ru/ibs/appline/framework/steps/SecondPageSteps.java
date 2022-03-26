@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class SecondPageSteps {
 
-    private static final Logger logger = LoggerFactory.getLogger(Hooks.class);
+    private static final Logger logger = LoggerFactory.getLogger(SecondPageSteps.class);
     private final PageManager pageManager = PageManager.getINSTANCE();
 
     @И("^Проверка что это вторая страница$")
