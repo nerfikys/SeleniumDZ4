@@ -124,7 +124,7 @@
                     <testFailureIgnore>true</testFailureIgnore>
                     <includes>**/*CucumberRunner.java</includes>
                     <argLine>
-                        -Xmx1024m
+                        -Xmx512m
                         -Dfile.encoding=${encoding.type}
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
                     </argLine>
